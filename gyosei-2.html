@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>行政法② 行政不服審査法・行政事件訴訟法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Old+Mincho:wght@700&display=swap">
+<style>
+/* Layout: one narrow column, one question per screen, thumb-sized answer rows, sticky progress bar */
+:root{
+  --paper:#F4F5F8; --surface:#FFFFFF; --ink:#1A2033; --muted:#5A6174; --line:#D8DBE4;
+  --accent:#27408B; --accent-soft:#E7EBF7; --ok:#1E7A4C; --ok-soft:#E2F2E9; --ng:#B42318; --ng-soft:#FBE8E6; --mid:#9A6700; --mid-soft:#FBF1DC;
+  --f-body:"BIZ UDPGothic","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  --f-head:"Zen Old Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#11141C; --surface:#1A1E29; --ink:#E7E9F0; --muted:#A1A7B7; --line:#2D3341;
+  --accent:#93A8F0; --accent-soft:#222B45; --ok:#5DC48E; --ok-soft:#173224; --ng:#F08B80; --ng-soft:#3A1F1C; --mid:#E3B341; --mid-soft:#3A2F14; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#11141C; --surface:#1A1E29; --ink:#E7E9F0; --muted:#A1A7B7; --line:#2D3341;
+  --accent:#93A8F0; --accent-soft:#222B45; --ok:#5DC48E; --ok-soft:#173224; --ng:#F08B80; --ng-soft:#3A1F1C; --mid:#E3B341; --mid-soft:#3A2F14; color-scheme:dark}
+html{-webkit-text-size-adjust:100%;color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+[hidden]{display:none!important}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 40px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.wrap{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);padding-block:12px 10px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.bar-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.set-name{font-family:var(--f-head);font-size:16px;letter-spacing:.04em;min-width:0}
+.bar a{color:var(--accent);font-size:13.5px;text-decoration:none}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;padding:3px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted);background:var(--surface);white-space:nowrap}
+.chip i{width:8px;height:8px;border-radius:50%;background:var(--muted);display:inline-block}
+.chip.on i{background:var(--ok)} .chip.off i{background:var(--ng)}
+.track{height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+.track span{display:block;height:100%;background:var(--accent);transition:width .25s}
+h1,h2{font-family:var(--f-head);font-weight:700;text-wrap:balance;margin:0;line-height:1.4}
+h1{font-size:26px} h2{font-size:20px}
+p{margin:0}
+.muted{color:var(--muted)} .small{font-size:14px}
+.qhead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.qno{font-family:var(--f-head);font-size:22px;color:var(--accent);font-variant-numeric:tabular-nums}
+.tag{font-size:12.5px;letter-spacing:.04em;color:var(--muted);border:1px solid var(--line);padding:1px 8px;border-radius:4px}
+.stem b{color:var(--accent)}
+.items{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.items div{display:grid;grid-template-columns:1.6em 1fr;gap:4px}
+.items div > *{min-width:0}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start;text-align:left;width:100%;font:inherit;color:var(--ink);
+  background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:14px;min-height:56px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.opt span:last-child{min-width:0}
+.opt .n{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent);display:grid;place-items:center;font-weight:700;font-variant-numeric:tabular-nums;font-size:15px}
+.opt:focus-visible,.btn:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.opt[disabled]{cursor:default}
+.opt.is-right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.is-right .n{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+.opt.is-wrong{border-color:var(--ng);background:var(--ng-soft)}
+.opt.is-wrong .n{background:var(--ng);border-color:var(--ng);color:var(--surface)}
+.opt.dim{opacity:.6}
+.verdict{border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;border:1.5px solid}
+.verdict.ok{background:var(--ok-soft);border-color:var(--ok)} .verdict.ng{background:var(--ng-soft);border-color:var(--ng)}
+.verdict strong{font-size:19px;font-family:var(--f-head)}
+.verdict.ok strong{color:var(--ok)} .verdict.ng strong{color:var(--ng)}
+details{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:0 14px}
+summary{cursor:pointer;padding:12px 0;font-weight:700}
+details[open] summary{border-bottom:1px solid var(--line);margin-bottom:10px}
+.why{display:flex;flex-direction:column;gap:12px;padding-bottom:14px}
+.why div{display:grid;grid-template-columns:2.6em 1fr;gap:6px}
+.why div > *{min-width:0}
+.mk{font-weight:700;font-variant-numeric:tabular-nums}
+.mk.o{color:var(--ok)} .mk.x{color:var(--ng)}
+.basis{margin:0;padding:0 0 14px 1.2em;display:flex;flex-direction:column;gap:6px}
+.tip{border-left:3px solid var(--accent);padding:4px 0 4px 12px;font-size:15px}
+.tip b{color:var(--accent)}
+.btn{font:inherit;font-weight:700;border-radius:12px;padding:14px 18px;min-height:52px;cursor:pointer;border:1.5px solid var(--accent);background:var(--accent);color:var(--surface);width:100%;text-align:center;text-decoration:none;display:block;box-sizing:border-box}
+.btn.ghost{background:transparent;color:var(--accent)}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row .btn{flex:1 1 180px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.note{font-size:14px;color:var(--muted)}
+.savenote{font-size:13px;color:var(--muted)}
+textarea{width:100%;box-sizing:border-box;font:inherit;font-size:17px;line-height:1.8;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px;min-height:120px;resize:vertical}
+.count{font-size:14px;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.count.over{color:var(--ng)}
+.model{font-family:var(--f-head);font-size:18px;line-height:1.8;background:var(--accent-soft);border-radius:10px;padding:12px 14px}
+.checks{display:flex;flex-direction:column;gap:8px}
+.checks label{display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:center;background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:12px;cursor:pointer}
+.checks label > *{min-width:0}
+.checks input{width:22px;height:22px;accent-color:var(--accent)}
+.pts{font-variant-numeric:tabular-nums;color:var(--muted);font-size:14px}
+.score{font-family:var(--f-head);font-size:40px;line-height:1.1;font-variant-numeric:tabular-nums}
+.score small{font-size:18px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stats > div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-width:0}
+.stats b{display:block;font-size:20px;font-variant-numeric:tabular-nums}
+.stats span{font-size:12.5px;color:var(--muted)}
+.areas{display:flex;flex-direction:column;gap:10px}
+.area{display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center}
+.area > *{min-width:0}
+.area .nm{font-weight:700;font-size:15px}
+.area .val{font-variant-numeric:tabular-nums;font-size:14px;color:var(--muted);white-space:nowrap}
+.area .meter{grid-column:1 / -1;height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.area .meter span{display:block;height:100%}
+.lv{font-size:12px;font-weight:700;padding:1px 8px;border-radius:999px;margin-left:6px;white-space:nowrap}
+.lv.weak{background:var(--ng-soft);color:var(--ng)} .lv.mid{background:var(--mid-soft);color:var(--mid)} .lv.good{background:var(--ok-soft);color:var(--ok)}
+.misslist{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px;font-size:15px}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14.5px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-weight:700;color:var(--muted);font-size:12.5px}
+td.o{color:var(--ok);font-weight:700} td.x{color:var(--ng);font-weight:700}
+.copybox{width:100%;box-sizing:border-box;font-size:13px;min-height:160px;font-family:ui-monospace,Menlo,monospace}
+.toast{font-size:14px;color:var(--ok);min-height:1.4em}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <div class="bar-row">
+      <span class="set-name" id="setName"></span>
+      <span class="chip" id="saveChip"><i></i><span id="saveChipText">自動送信オフ</span></span>
+    </div>
+    <div class="bar-row"><a href="./">← セット一覧</a><span class="muted small" id="progText"></span></div>
+    <div class="track" aria-hidden="true"><span id="trackFill" style="width:0%"></span></div>
+  </header>
+  <main id="main" class="wrap" aria-live="polite"></main>
+</div>
+<script>
+const SET = {"id":"gyosei-2","code":"行政法2","title":"行政法② 行政不服審査法・行政事件訴訟法","lead":"審査請求の流れと、処分性・原告適格・訴えの利益など訴訟要件の判例を中心に確認します。最後に記述式を1問解きます。","minutes":45,"questions":[{"id":"q01","area":"行審法：要件・教示","topic":"審査請求先・対象","basis":["行政不服審査法1条・4条・47条"],"tip":"「条例に基づく処分」は、行手法では適用除外、行審法では対象。両法の違いとしてよく出る。","kind":"mc","format":"妥当なもの","stem":"審査請求の対象および審査請求をすべき行政庁に関する次の記述のうち、行政不服審査法の規定に照らし、\u003cb>妥当なもの\u003c/b>はどれか。","options":["主任の大臣が処分庁等の上級行政庁である場合には、審査請求は内閣総理大臣に対してする。","地方公共団体の機関がする処分で、その根拠となる規定が条例に置かれているものは、行政不服審査法による審査請求の対象とならない。","人の収容、物の留置など継続的性質を有する事実上の行為は、審査請求の対象とならない。","処分庁に上級行政庁がある場合でも、審査請求は常に処分庁に対してしなければならない。","処分庁等に上級行政庁がない場合には、審査請求は、法律（条例に基づく処分については条例）に特別の定めがある場合を除き、当該処分庁等に対してする。"],"why":["誤り。主任の大臣が上級行政庁であるときは、当該主任の大臣に対してする（4条3号）。","誤り。行政手続法と異なり、行政不服審査法は条例に基づく処分も対象とする。","誤り。事実上の行為も対象となる。理由があるときの裁決の方法は47条に定められている。","誤り。上級行政庁がある場合は、原則として最上級行政庁に対してする（4条4号）。","正しい。4条1号。"],"answer":4},{"id":"q02","area":"行審法：要件・教示","topic":"審査請求期間","basis":["行政不服審査法5条・6条・18条"],"tip":"審査請求は「知った日から3か月・処分の日から1年」、取消訴訟は「知った日から6か月・処分の日から1年」。数字の入れ替えに注意。","kind":"mc","format":"妥当でないもの","stem":"不服申立ての期間および種類に関する次の記述のうち、行政不服審査法の規定に照らし、\u003cb>妥当でないもの\u003c/b>はどれか。","options":["不作為についての審査請求には、審査請求期間の制限がない。","再調査の請求をしたときは、原則として、当該再調査の請求についての決定を経た後でなければ、審査請求をすることができない。","処分についての審査請求は、処分があったことを知った日の翌日から起算して6か月を経過したときは、正当な理由があってもすることができない。","再審査請求は、原裁決又は当該処分を対象としてすることができる。","処分についての審査請求は、処分があった日の翌日から起算して1年を経過したときは、正当な理由がある場合を除き、することができない。"],"why":["正しい。不作為が続く限り審査請求できる。","正しい。5条2項。","誤り（これが正解）。主観的審査請求期間は3か月で、正当な理由があるときはこの限りでない（18条1項）。","正しい。6条2項。","正しい。18条2項。"],"answer":2},{"id":"q03","area":"行審法：審理・裁決","topic":"審理員","basis":["行政不服審査法9条・31条・42条"],"tip":"","kind":"mc","format":"妥当なもの","stem":"審理員に関する次の記述のうち、行政不服審査法の規定に照らし、\u003cb>妥当なもの\u003c/b>はどれか。","options":["審査請求人は、審理員に対し、口頭で意見を述べる機会を与えるよう申し立てることはできない。","審査請求がされた行政庁は、原則として、審査庁に所属する職員のうちから審理手続を行う者（審理員）を指名し、その旨を審査請求人及び処分庁等に通知しなければならない。","条例に基づく処分について条例に特別の定めがある場合でも、審理員による審理手続を省略することはできない。","審理員は、審理手続を終結したときは、遅滞なく審理員意見書を作成し、速やかに処分庁に提出しなければならない。","審理員には、審査請求に係る処分に関与した者もなることができる。"],"why":["誤り。口頭意見陳述の申立てができる（31条1項）。","正しい。9条1項。","誤り。委員会等が審査庁である場合、条例に基づく処分について条例に特別の定めがある場合などは、審理員の指名を要しない（9条1項ただし書）。","誤り。審理員意見書は審査庁に提出する（42条2項）。","誤り。処分に関与した者等は審理員になれない（9条2項1号）。"],"answer":1},{"id":"q04","area":"行審法：審理・裁決","topic":"執行停止","basis":["行政不服審査法25条・40条"],"tip":"","kind":"mc","format":"妥当でないもの","stem":"審査請求における執行停止に関する次の記述のうち、行政不服審査法の規定に照らし、\u003cb>妥当でないもの\u003c/b>はどれか。","options":["処分庁の上級行政庁又は処分庁である審査庁は、必要があると認める場合には、審査請求人の申立てにより又は職権で、執行停止その他の措置をとることができる。","審理員は、必要があると認める場合には、審査庁に対し、執行停止をすべき旨の意見書を提出することができる。","処分庁の上級行政庁又は処分庁のいずれでもない審査庁は、職権で執行停止をすることはできない。","審査請求がされたときは、処分の効力、処分の執行又は手続の続行は、当然に停止する。","審査請求人の申立てがあった場合において、処分等により生ずる重大な損害を避けるために緊急の必要があると認めるときは、審査庁は、原則として執行停止をしなければならない。"],"why":["正しい。25条2項。","正しい。40条。","正しい。上級行政庁・処分庁以外の審査庁は、申立てにより、処分庁の意見を聴取した上で執行停止ができるにとどまる（25条3項）。","誤り（これが正解）。執行不停止が原則（25条1項）。","正しい。25条4項（義務的執行停止）。"],"answer":3},{"id":"q05","area":"行審法：審理・裁決","topic":"裁決","basis":["行政不服審査法45条〜48条"],"tip":"","kind":"mc","format":"個数","stem":"審査請求に対する裁決に関する次の記述ア〜オのうち、行政不服審査法の規定に照らし、\u003cb>妥当なものはいくつ\u003c/b>あるか。","items":["処分（事実上の行為を除く。）についての審査請求に理由がある場合、処分庁の上級行政庁である審査庁は、裁決で当該処分の全部若しくは一部を取り消し、又はこれを変更することができる。","処分庁の上級行政庁でも処分庁でもない審査庁は、裁決で処分を変更することができない。","事実上の行為についての審査請求に理由がある場合、処分庁である審査庁は、裁決で当該事実上の行為が違法又は不当である旨を宣言するとともに、当該事実上の行為の全部若しくは一部を撤廃し、又はこれを変更する。","審査庁は、審査請求人の不利益に当該処分を変更することができる。","処分が違法又は不当ではあるが、これを取り消すことにより公の利益に著しい障害を生ずる場合には、一定の要件の下で、審査庁は裁決で審査請求を棄却することができる。"],"itemOk":[true,true,true,false,true],"itemWhy":["正しい。46条1項本文。","正しい。46条1項ただし書。","正しい。47条2号。処分庁以外の審査庁は、処分庁に撤廃等を「命ずる」（同条1号）。","誤り。不利益変更は禁止されている（48条）。","正しい。事情裁決（45条3項）。この場合、裁決の主文で違法又は不当を宣言する。"],"options":["一つ","二つ","三つ","四つ","五つ"],"answer":3},{"id":"q06","area":"行審法：要件・教示","topic":"教示","basis":["行政不服審査法22条・82条・83条"],"tip":"","kind":"mc","format":"妥当なもの","stem":"教示に関する次の記述のうち、行政不服審査法の規定に照らし、\u003cb>妥当なもの\u003c/b>はどれか。","options":["利害関係人から教示を求められた場合でも、行政庁は教示の義務を負わない。","行政庁は、口頭でする処分についても、不服申立てをすることができる旨等を教示しなければならない。","審査請求をすべき行政庁でない行政庁が誤って教示され、その教示された行政庁に書面で審査請求がされたときは、当該行政庁は、速やかに審査請求書を処分庁又は審査庁となるべき行政庁に送付し、その旨を審査請求人に通知しなければならない。","行政庁は、不服申立てをすることができる処分をする場合には、処分の相手方に対し、不服申立てをすることができる旨のみを教示すれば足りる。","行政庁が教示をしなかった場合には、処分の相手方は審査請求をすることができない。"],"why":["誤り。利害関係人から求められたときも教示しなければならない（82条2項）。","誤り。口頭でする処分は教示義務の対象外（82条1項ただし書）。","正しい。22条1項。","誤り。不服申立てをすべき行政庁と期間も教示しなければならない（82条1項）。","誤り。教示がなかった場合は、処分庁に不服申立書を提出することができる（83条1項）。"],"answer":2},{"id":"q07","area":"行審法：審理・裁決","topic":"審理手続","basis":["行政不服審査法11条・12条・29条・30条・38条"],"tip":"","kind":"mc","format":"組合せ","stem":"審査請求の審理手続に関する次の記述ア〜オのうち、行政不服審査法の規定に照らし、\u003cb>妥当なものの組合せ\u003c/b>はどれか。","items":["審査請求人は、審理員に対し、提出書類等の閲覧又は写しの交付を求めることができる。","審理員は、処分庁等に弁明書の提出を求めるものとし、弁明書の提出があったときは、これを審査請求人及び参加人に送付しなければならない。","審査請求人は、弁明書に記載された事項に対する反論を記載した書面を提出することはできない。","審査請求は、代理人によってすることはできない。","多数人が共同して審査請求をしようとするときは、5人以内の総代を必ず互選しなければならない。"],"itemOk":[true,true,false,false,false],"itemWhy":["正しい。38条1項。","正しい。29条2項・5項。","誤り。反論書を提出できる（30条1項）。","誤り。代理人によってすることができる（12条1項）。","誤り。3人を超えない総代を互選することが「できる」（11条1項）。"],"options":["ア・イ","ア・ウ","ア・エ","ア・オ","イ・ウ"],"answer":0},{"id":"q08","area":"行審法：審理・裁決","topic":"行政不服審査会への諮問","basis":["行政不服審査法43条・44条・81条"],"tip":"","kind":"mc","format":"妥当でないもの","stem":"行政不服審査会等への諮問に関する次の記述のうち、行政不服審査法の規定に照らし、\u003cb>妥当でないもの\u003c/b>はどれか。","options":["地方公共団体には、執行機関の附属機関として、行政不服審査会と同様の機関が置かれる。","審査庁が主任の大臣である場合、審理員意見書の提出を受けたときは、例外なく行政不服審査会に諮問しなければならない。","審査庁は、行政不服審査会等から諮問に対する答申を受けたときは、遅滞なく、裁決をしなければならない。","審査請求人から行政不服審査会等への諮問を希望しない旨の申出がされている場合（参加人から反対する旨の申出がされている場合を除く。）には、諮問を要しない。","審査請求が不適法であり却下する場合には、行政不服審査会等への諮問を要しない。"],"why":["正しい。81条1項。","誤り（これが正解）。43条1項各号に諮問不要の場合が定められている。","正しい。44条。","正しい。43条1項4号。","正しい。43条1項6号。"],"answer":1},{"id":"q09","area":"行審法：要件・教示","topic":"再調査の請求","basis":["行政不服審査法5条・61条"],"tip":"","kind":"mc","format":"妥当なもの","stem":"再調査の請求に関する次の記述のうち、行政不服審査法の規定に照らし、\u003cb>妥当なもの\u003c/b>はどれか。","options":["再調査の請求においても、審理員による審理手続が行われる。","再調査の請求は、処分庁の上級行政庁に対してする。","再調査の請求をしたときは、その決定を経た後でなければ、いかなる場合も審査請求をすることができない。","再調査の請求は、不作為についてもすることができる。","再調査の請求は、処分庁以外の行政庁に対して審査請求をすることができる場合において、法律に再調査の請求をすることができる旨の定めがあるときに、処分庁に対してすることができる。"],"why":["誤り。再調査の請求には審理員の規定は準用されない（61条）。","誤り。処分庁に対してする。","誤り。再調査の請求の日の翌日から3か月を経過しても決定がない場合などは、決定を経ずに審査請求できる（5条2項各号）。","誤り。処分についてのみ認められる。","正しい。5条1項。"],"answer":4},{"id":"q10","area":"行訴法：訴訟要件","topic":"処分性","basis":["最大判平20.9.10","最判平21.11.26","最判平17.7.15","最判昭57.4.22","最判昭43.12.24"],"tip":"処分性は「肯定・否定」の判例リストで覚えるのが近道。計画・条例・勧告・通達のどれかが毎年出る。","kind":"mc","format":"妥当なもの","stem":"抗告訴訟の対象となる処分に関する次の記述のうち、最高裁判所の判例に照らし、\u003cb>妥当なもの\u003c/b>はどれか。","options":["土地区画整理事業の事業計画の決定は、施行地区内の宅地所有者等の法的地位に変動をもたらすものであって、抗告訴訟の対象となる行政処分に当たる。","医療法に基づく病院開設中止の勧告は、行政指導として定められているので、抗告訴訟の対象となる行政処分に当たらない。","市の設置する保育所を廃止する条例の制定行為は、条例制定行為である以上、抗告訴訟の対象となる行政処分に当たることはない。","都市計画法上の用途地域の指定は、その地域内の土地所有者に建築基準法上の新たな制約を課すものであるから、抗告訴訟の対象となる行政処分に当たる。","通達は、国民の権利義務に重大な影響を及ぼす場合には、常に抗告訴訟の対象となる。"],"why":["正しい。最大判平20.9.10（従来の青写真判決を変更）。","誤り。最判平17.7.15は、勧告に従わないと保険医療機関の指定を受けられない結果になることから処分性を認めた。","誤り。横浜市保育所廃止条例事件（最判平21.11.26）は処分性を認めた。","誤り。最判昭57.4.22は、一般的抽象的な制約にすぎないとして処分性を否定した。","誤り。墓地埋葬通達事件（最判昭43.12.24）は通達の処分性を否定した。"],"answer":0},{"id":"q11","area":"行訴法：訴訟要件","topic":"原告適格","basis":["最判平10.12.17（風俗営業許可）","最大判平17.12.7（小田急）","最判平4.9.22（もんじゅ）","行政事件訴訟法9条2項","最判昭37.1.19"],"tip":"","kind":"mc","format":"妥当でないもの","stem":"取消訴訟の原告適格に関する次の記述のうち、最高裁判所の判例に照らし、\u003cb>妥当でないもの\u003c/b>はどれか。","options":["鉄道の連続立体交差化事業の認可について、事業地の周辺に居住する住民のうち、騒音・振動等による健康又は生活環境に係る著しい被害を直接的に受けるおそれのある者は、取消訴訟の原告適格を有する。","原子炉設置許可処分について、原子炉から一定範囲の地域に居住する住民は、無効確認を求める原告適格を有する。","行政事件訴訟法9条2項は、処分の相手方以外の者の法律上の利益の有無を判断するに当たり、根拠法令の文言のみによることなく、その趣旨・目的や考慮されるべき利益の内容・性質を考慮するものとしている。","公衆浴場法の適正配置規定の下で、既存の公衆浴場営業者は、他の者に対する営業許可の無効確認を求める原告適格を有する。","風俗営業の許可について、営業所の周辺に居住する者は、良好な風俗環境の下で生活する利益を有するから、その許可の取消訴訟の原告適格を有する。"],"why":["正しい。小田急高架訴訟（最大判平17.12.7）。","正しい。もんじゅ訴訟（最判平4.9.22）。","正しい。2004年改正で追加された9条2項。","正しい。最判昭37.1.19。","誤り（これが正解）。最判平10.12.17は、周辺住民の原告適格を否定した。"],"answer":4},{"id":"q12","area":"行訴法：訴訟要件","topic":"訴えの利益","basis":["最判昭59.10.26","最判昭55.11.25","最判平4.1.24","最判平14.2.28","最判平21.2.27"],"tip":"","kind":"mc","format":"妥当なもの","stem":"取消訴訟の訴えの利益に関する次の記述のうち、最高裁判所の判例に照らし、\u003cb>妥当なもの\u003c/b>はどれか。","options":["公文書非公開決定の取消訴訟において、当該公文書が書証として裁判所に提出された場合には、訴えの利益は失われる。","建築確認の取消訴訟は、建築工事が完了した場合には訴えの利益を失う。","土地改良事業の施行認可処分の取消訴訟は、事業が完了して原状回復が社会通念上不可能になった場合には、訴えの利益を失う。","運転免許停止処分の期間が経過し、無違反・無処分で1年を経過した後でも、名誉・信用の回復のため停止処分の取消しを求める訴えの利益が認められる。","優良運転者である旨の記載のない免許証を交付されて更新処分を受けた者は、更新処分の取消しを求める訴えの利益を有しない。"],"why":["誤り。最判平14.2.28は訴えの利益は失われないとした。","正しい。最判昭59.10.26。","誤り。最判平4.1.24は訴えの利益は失われないとした（事情判決の問題となる）。","誤り。最判昭55.11.25は訴えの利益を否定した。","誤り。最判平21.2.27は訴えの利益を認めた。"],"answer":1},{"id":"q13","area":"行訴法：訴訟要件","topic":"出訴期間・被告・管轄","basis":["行政事件訴訟法11条・12条・14条"],"tip":"","kind":"mc","format":"妥当でないもの","stem":"取消訴訟の出訴期間、被告および管轄に関する次の記述のうち、行政事件訴訟法の規定に照らし、\u003cb>妥当でないもの\u003c/b>はどれか。","options":["処分について審査請求があったときは、取消訴訟の出訴期間は、原則として、これに対する裁決があったことを知った日から6か月である。","国を被告とする取消訴訟は、原告の普通裁判籍の所在地を管轄する高等裁判所の所在地を管轄する地方裁判所にも提起することができる。","取消訴訟は、処分の日から1年を経過したときは、正当な理由がある場合を除き、提起することができない。","取消訴訟は、処分があったことを知った日から1年を経過したときは、正当な理由があっても提起することができない。","処分をした行政庁が国又は公共団体に所属する場合には、取消訴訟は、当該行政庁の所属する国又は公共団体を被告として提起しなければならない。"],"why":["正しい。14条3項。","正しい。12条4項（特定管轄裁判所）。","正しい。14条2項。","誤り（これが正解）。知った日から6か月で、正当な理由があればこの限りでない（14条1項）。","正しい。11条1項1号。"],"answer":3},{"id":"q14","area":"行訴法：訴訟要件","topic":"自由選択主義・原処分主義","basis":["行政事件訴訟法8条・10条"],"tip":"","kind":"mc","format":"妥当なもの","stem":"取消訴訟と審査請求との関係に関する次の記述のうち、行政事件訴訟法の規定に照らし、\u003cb>妥当なもの\u003c/b>はどれか。","options":["処分の取消訴訟と裁決の取消訴訟は、同時に提起することができない。","審査請求前置が定められている場合でも、審査請求があった日から1か月を経過しても裁決がないときは、裁決を経ないで取消訴訟を提起することができる。","処分の取消しの訴えと、その処分についての審査請求を棄却した裁決の取消しの訴えとを提起することができる場合には、裁決の取消しの訴えにおいては、処分の違法を理由として取消しを求めることができない。","取消訴訟においては、自己の法律上の利益に関係のない違法も理由として取消しを求めることができる。","処分について審査請求をすることができる場合には、法律に特別の定めがなくても、裁決を経た後でなければ取消訴訟を提起することができない。"],"why":["誤り。同時に提起することもできる。","誤り。3か月を経過しても裁決がないとき（8条2項1号）。","正しい。原処分主義（10条2項）。","誤り。自己の法律上の利益に関係のない違法は主張できない（10条1項）。","誤り。自由選択主義が原則（8条1項）。"],"answer":2},{"id":"q15","area":"行訴法：仮の救済・判決","topic":"執行停止・内閣総理大臣の異議","basis":["行政事件訴訟法25条・27条"],"tip":"内閣総理大臣の異議は行訴法だけの制度。行審法にはない。","kind":"mc","format":"妥当でないもの","stem":"執行停止に関する次の記述のうち、行政事件訴訟法の規定に照らし、\u003cb>妥当でないもの\u003c/b>はどれか。","options":["内閣総理大臣は、やむをえない場合でなければ異議を述べてはならず、異議を述べたときは、次の常会において国会にこれを報告しなければならない。","内閣総理大臣は、執行停止の申立てがあった場合には、執行停止の決定の前後を問わず、裁判所に対し異議を述べることができる。","執行停止は、本案について理由がないとみえるときは、することができない。","執行停止の決定がされた後に内閣総理大臣の異議が述べられた場合でも、裁判所は執行停止の決定を取り消す必要はない。","処分の取消しの訴えの提起は、処分の効力、処分の執行又は手続の続行を妨げない。"],"why":["正しい。27条6項。","正しい。27条1項。","正しい。25条4項。","誤り（これが正解）。決定後に異議があったときは、裁判所は決定を取り消さなければならない（27条4項）。","正しい。執行不停止原則（25条1項）。"],"answer":3},{"id":"q16","area":"行訴法：仮の救済・判決","topic":"取消判決の効力","basis":["行政事件訴訟法31条〜34条"],"tip":"","kind":"mc","format":"組合せ","stem":"取消判決等の効力に関する次の記述ア〜オのうち、行政事件訴訟法の規定に照らし、\u003cb>妥当なものの組合せ\u003c/b>はどれか。","items":["処分を取り消す判決は、第三者に対しても効力を有する。","処分を取り消す判決は、その事件について、処分をした行政庁その他の関係行政庁を拘束する。","申請を却下し又は棄却した処分が判決により取り消されたときは、その処分をした行政庁は、改めて申請を認容する処分をしなければならない。","事情判決をする場合でも、裁判所は判決の主文で処分の違法を宣言する必要はない。","取消判決により権利を害された第三者は、いかなる場合でも再審の訴えを提起することができる。"],"itemOk":[true,true,false,false,false],"itemWhy":["正しい。第三者効（32条1項）。","正しい。拘束力（33条1項）。","誤り。判決の趣旨に従い、改めて申請に対する処分をしなければならない（33条2項）。認容が義務付けられるわけではない。","誤り。主文で違法を宣言しなければならない（31条1項後段）。","誤り。自己の責めに帰することができない理由により訴訟に参加できなかった等の要件がある（34条1項）。"],"options":["ア・イ","ア・ウ","ア・エ","イ・エ","エ・オ"],"answer":0},{"id":"q17","area":"行訴法：取消訴訟以外","topic":"無効等確認・不作為の違法確認","basis":["行政事件訴訟法36条〜38条"],"tip":"","kind":"mc","format":"妥当なもの","stem":"無効等確認の訴えおよび不作為の違法確認の訴えに関する次の記述のうち、行政事件訴訟法の規定に照らし、\u003cb>妥当なもの\u003c/b>はどれか。","options":["無効等確認の訴えは、処分があったことを知った日から6か月以内に提起しなければならない。","無効等確認の訴えは、処分の無効を前提とする現在の法律関係に関する訴えによって目的を達することができる場合にも、常に提起することができる。","不作為の違法確認訴訟の係属中に行政庁が申請を却下する処分をしても、訴えの利益は失われない。","不作為の違法確認の訴えでは、裁判所は、行政庁がすべき処分の内容まで判断して、その処分をすべき旨を命ずる判決をする。","不作為の違法確認の訴えは、処分又は裁決についての申請をした者に限り、提起することができる。"],"why":["誤り。無効等確認の訴えには出訴期間の規定（14条）が準用されない（38条）。","誤り。現在の法律関係に関する訴えで目的を達することができない場合に限り提起できる（36条）。","誤り。何らかの処分がされれば、不作為状態が解消し訴えの利益は失われる。","誤り。それは義務付けの訴えの判決。不作為の違法確認は違法を確認するにとどまる。","正しい。37条。"],"answer":4},{"id":"q18","area":"行訴法：取消訴訟以外","topic":"義務付け・差止め","basis":["行政事件訴訟法37条の2〜37条の5"],"tip":"","kind":"mc","format":"妥当でないもの","stem":"義務付けの訴えおよび差止めの訴えに関する次の記述のうち、行政事件訴訟法の規定に照らし、\u003cb>妥当でないもの\u003c/b>はどれか。","options":["申請型義務付けの訴えは単独で提起することができ、不作為の違法確認の訴えや拒否処分の取消訴訟等を併合して提起する必要はない。","非申請型義務付けの訴えは、一定の処分がされないことにより重大な損害を生ずるおそれがあり、かつ、その損害を避けるため他に適当な方法がないときに限り、提起することができる。","差止めの訴えの原告適格の判断については、取消訴訟の原告適格に関する9条2項の規定が準用される。","差止めの訴えは、一定の処分がされることにより重大な損害を生ずるおそれがある場合に限り提起でき、その損害を避けるため他に適当な方法があるときはこの限りでない。","義務付けの訴えの提起があった場合において、償うことのできない損害を避けるため緊急の必要があり、かつ、本案について理由があるとみえるときは、裁判所は、申立てにより、仮の義務付けを命ずることができる。"],"why":["誤り（これが正解）。申請型は、不作為の違法確認の訴え又は取消訴訟・無効等確認の訴えを併合して提起しなければならない（37条の3第3項）。","正しい。37条の2第1項。","正しい。37条の4第4項。","正しい。37条の4第1項。","正しい。37条の5第1項。"],"answer":0},{"id":"q19","area":"行訴法：取消訴訟以外","topic":"当事者訴訟・民衆訴訟・機関訴訟","basis":["行政事件訴訟法4条・5条・6条・42条"],"tip":"","kind":"mc","format":"妥当なもの","stem":"行政事件訴訟の類型に関する次の記述のうち、行政事件訴訟法の規定に照らし、\u003cb>妥当なもの\u003c/b>はどれか。","options":["当事者間の法律関係を確認し又は形成する処分に関する訴訟で、法令の規定によりその法律関係の当事者の一方を被告とするものは、民衆訴訟である。","民衆訴訟及び機関訴訟は、法律に定める場合において、法律に定める者に限り、提起することができる。","地方自治法上の住民訴訟は、機関訴訟の典型例である。","公職選挙法上の選挙無効訴訟は、機関訴訟に当たる。","実質的当事者訴訟には、公法上の法律関係に関する確認の訴えは含まれない。"],"why":["誤り。それは形式的当事者訴訟（4条前段）。","正しい。42条。","誤り。住民訴訟は民衆訴訟。","誤り。選挙無効訴訟も民衆訴訟。","誤り。4条後段は「公法上の法律関係に関する確認の訴え」を明記している。"],"answer":1},{"id":"q20","area":"記述式","topic":"申請型義務付け訴訟（記述）","basis":["行政事件訴訟法11条1項・37条の3・38条1項"],"tip":"記述式は「被告」「訴訟類型」「併合」の3点セットが定番。被告を「A市長」と書くと減点になる。","kind":"essay","format":"記述 40字程度","stem":"Xは、A市長に対して法令に基づく許可を申請したが、A市長は拒否処分をした。Xがこの許可を得るために、行政事件訴訟法上、誰を被告として、どのような訴訟を、どのように提起すべきか。40字程度で記述しなさい。","model":"A市を被告とし、拒否処分の取消訴訟と許可の義務付け訴訟を併合して提起する。","explain":"申請に対する拒否処分がされた場合の申請型義務付け訴訟（行政事件訴訟法37条の3第1項2号）。この場合、拒否処分の取消訴訟又は無効等確認の訴えを併合して提起しなければならない（同条3項2号）。被告は、処分をした行政庁（A市長）ではなく、その所属する公共団体であるA市（38条1項・11条1項）。「誰を・何を・どのように」をすべて入れる。","elements":[{"label":"被告はA市（行政庁の所属する公共団体）","kw":["A市を被告","A市が被告","市を被告"],"pts":5},{"label":"拒否処分の取消訴訟（又は無効等確認訴訟）","kw":["取消"],"pts":5},{"label":"許可処分の義務付け訴訟","kw":["義務付け"],"pts":5},{"label":"両者を併合して提起する","kw":["併合"],"pts":5}]}]};
+const FORM = {"action":"https://docs.google.com/forms/d/e/1FAIpQLSf2NzKJbnaql48Dd2k9GhM2BKyjMSCCrhNiJR8sUsGtXwd6DA/formResponse","fields":{"code":"896987813","question":"159852826","answer":"961523775","result":"1625749689"}};
+const KANA = ["ア","イ","ウ","エ","オ"];
+const Q = SET.questions;
+const MC = Q.filter(q=>q.kind==="mc");
+const PT = 4;
+
+/* ---------- storage ---------- */
+const LS_KEY = "kd-"+SET.id+"-progress", DRAFT_KEY = "kd-"+SET.id+"-draft", SUM_KEY = "kd-sum-"+SET.id;
+const state = { i:-1, run:null, answers:{}, shownAt:0 };
+function lsGet(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+function persist(){ lsSet(LS_KEY, {run:state.run, i:state.i, answers:state.answers}); }
+let memAnon=null;
+function anonKey(){
+  let k=null; try{ k=localStorage.getItem("kenpo-anon"); }catch(e){}
+  if(!k){ k = memAnon || Array.from({length:4},()=>"ABCDEFGHJKLMNPQRSTUVWXYZ23456789"[Math.floor(Math.random()*32)]).join(""); memAnon=k; try{ localStorage.setItem("kenpo-anon",k);}catch(e){} }
+  return k;
+}
+let memRun=0;
+function newRun(){
+  let n=memRun; try{ n=parseInt(localStorage.getItem("kenpo-attempt")||"0",10)||0; }catch(e){}
+  n++; memRun=n; try{ localStorage.setItem("kenpo-attempt", String(n)); }catch(e){}
+  return n;
+}
+function examCode(){ return anonKey()+"-"+(state.run||1); }
+
+/* ---------- Googleフォームへの自動送信 ---------- */
+const formReady = !!(FORM.action && FORM.fields.code && FORM.fields.question && FORM.fields.answer && FORM.fields.result);
+const mode = formReady ? "self" : "none";
+function setChip(){
+  const chip=document.getElementById("saveChip"), t=document.getElementById("saveChipText");
+  chip.classList.remove("on","off");
+  if(mode==="self"){ chip.classList.add("on"); t.textContent="自動送信オン"; } else { chip.classList.add("off"); t.textContent="自動送信オフ"; }
+}
+let chain = Promise.resolve();
+function save(rec){ const p = chain.then(()=>doSave(rec)); chain = p.catch(()=>{}); return p; }
+async function doSave(rec){
+  if(mode!=="self") return false;
+  const body = new URLSearchParams();
+  body.append("entry."+FORM.fields.code, examCode());
+  body.append("entry."+FORM.fields.question, rec.question);
+  body.append("entry."+FORM.fields.answer, rec.answer);
+  body.append("entry."+FORM.fields.result, rec.result);
+  const attempt = ()=>fetch(FORM.action, {method:"POST", mode:"no-cors", body});
+  try{ await attempt(); return true; }
+  catch(e){ await new Promise(r=>setTimeout(r, 1000+Math.random()*1000)); try{ await attempt(); return true; }catch(e2){ return false; } }
+}
+function savedText(s){
+  if(s==="ok") return "回答を送信しました";
+  if(s==="fail") return "送信できませんでした。最後に「結果をコピー」で送ってください";
+  if(s==="pending") return "送信中…";
+  return "自動送信オフ：最後に「結果をコピー」で送ってください";
+}
+function qLabel(q,k){ return SET.code+"-Q"+String(k+1).padStart(2,"0")+" "+q.area+"/"+q.topic; }
+
+/* ---------- rendering ---------- */
+const main = document.getElementById("main");
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function setTrack(){
+  const done = Object.keys(state.answers).length;
+  document.getElementById("trackFill").style.width = (done/Q.length*100)+"%";
+  document.getElementById("progText").textContent = state.i>=0 && state.i<Q.length ? `${state.i+1} / ${Q.length}` : `全${Q.length}問`;
+}
+function render(){
+  setTrack();
+  if(state.i<0) return renderStart();
+  if(state.i>=Q.length) return renderResult();
+  const q=Q[state.i];
+  return q.kind==="essay" ? renderEssay(q) : renderMC(q);
+}
+function renderStart(){
+  const prev = lsGet(LS_KEY);
+  const canResume = prev && prev.run && prev.i>=0 && prev.i<Q.length && Object.keys(prev.answers||{}).length>0;
+  const nEssay = Q.length-MC.length;
+  const areas = [...new Set(Q.map(q=>q.area))];
+  main.innerHTML = `
+    <section class="card" style="gap:14px">
+      <p class="muted small">令和8年度 行政書士試験（11月8日）弱点診断</p>
+      <h1>${esc(SET.title)}</h1>
+      <p>${esc(SET.lead)}</p>
+      <p class="muted small">5肢択一${MC.length}問${nEssay?`・記述${nEssay}問`:""}／目安${SET.minutes}分。出題分野：${esc(areas.join("・"))}</p>
+      <p class="note">迷った問題も、勘で選ばずに「いちばん自信のある肢」を選んでください。最後に分野ごとの正答率と弱点が出ます。途中で閉じても、同じiPhoneのSafariなら「続きから」再開できます。${mode==="self"?"回答は1問ごとに自動で送信されます（お名前などは送りません）。":""}</p>
+      <div class="row">
+        ${canResume ? `<button class="btn" id="resume">続きから（第${prev.i+1}問）</button><button class="btn ghost" id="start">最初から</button>` : `<button class="btn" id="start">はじめる</button>`}
+      </div>
+    </section>`;
+  document.getElementById("start").onclick=()=>{ state.run=newRun(); state.answers={}; state.i=0; persist(); render(); window.scrollTo(0,0); };
+  if(canResume) document.getElementById("resume").onclick=()=>{ state.run=prev.run; state.answers=prev.answers; state.i=prev.i; render(); window.scrollTo(0,0); };
+}
+function head(q){
+  return `<div class="qhead"><span class="qno">第${state.i+1}問</span><span class="tag">${esc(q.area)}</span><span class="tag">${esc(q.format)}</span></div>`;
+}
+function renderMC(q){
+  const a = state.answers[q.id];
+  const itemsHtml = q.items ? `<div class="items">${q.items.map((t,k)=>`<div><b>${KANA[k]}</b><span>${esc(t)}</span></div>`).join("")}</div>` : "";
+  const opts = q.options.map((t,k)=>{
+    let cls="opt";
+    if(a){ if(k===q.answer) cls+=" is-right"; else if(k===a.choice) cls+=" is-wrong"; else cls+=" dim"; }
+    return `<button class="${cls}" data-k="${k}" id="opt-${q.id}-${k}" ${a?"disabled":""}><span class="n">${k+1}</span><span>${esc(t)}</span></button>`;
+  }).join("");
+  main.innerHTML = `${head(q)}<p class="stem">${q.stem}</p>${itemsHtml}<div class="opts">${opts}</div><div id="after"></div>`;
+  if(!a){ state.shownAt = Date.now(); main.querySelectorAll(".opt").forEach(b=>b.onclick=()=>choose(q, +b.dataset.k)); }
+  else renderAfter(q, a);
+}
+function choose(q,k){
+  const secs = Math.max(1, Math.round((Date.now()-state.shownAt)/1000));
+  const rec = {choice:k, correct:k===q.answer, seconds:secs, saved: mode==="self"?"pending":"off"};
+  state.answers[q.id]=rec; persist(); render();
+  const after=document.getElementById("after"); if(after) after.scrollIntoView({behavior:"smooth",block:"start"});
+  if(rec.saved==="pending"){
+    save({question:qLabel(q,state.i), answer:"肢"+(k+1), result:(rec.correct?"○":"×")+" 正解肢"+(q.answer+1)+" "+secs+"秒"}).then(ok=>{
+      rec.saved = ok?"ok":"fail"; persist();
+      const el=document.getElementById("savenote-"+q.id); if(el) el.textContent=savedText(rec.saved);
+    });
+  }
+}
+function next(){ state.i++; persist(); render(); window.scrollTo(0,0); }
+function renderAfter(q,a){
+  const ok = a.correct;
+  const whyHtml = q.items
+    ? q.items.map((_,k)=>`<div><span class="mk ${q.itemOk[k]?"o":"x"}">${KANA[k]} ${q.itemOk[k]?"○":"×"}</span><span>${esc(q.itemWhy[k])}</span></div>`).join("")
+    : q.why.map((t,k)=>`<div><span class="mk ${k===q.answer?"o":"x"}">肢${k+1}</span><span>${esc(t)}</span></div>`).join("");
+  const isLast = state.i===Q.length-1;
+  document.getElementById("after").innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="verdict ${ok?"ok":"ng"}">
+        <strong>${ok?"正解":"不正解"}　<span style="font-size:15px">正解は肢${q.answer+1}${ok?"":"（あなたの解答は肢"+(a.choice+1)+"）"}</span></strong>
+        <span class="savenote" id="savenote-${q.id}">${savedText(a.saved)}</span>
+      </div>
+      <details open><summary>${q.items?"ア〜オの解説":"肢ごとの解説"}</summary><div class="why">${whyHtml}</div></details>
+      ${q.basis&&q.basis.length?`<details><summary>根拠（条文・判例）</summary><ul class="basis">${q.basis.map(b=>`<li>${esc(b)}</li>`).join("")}</ul></details>`:""}
+      ${q.tip?`<p class="tip"><b>解き方のコツ</b>　${esc(q.tip)}</p>`:""}
+      <button class="btn" id="next">${isLast?"結果を見る":"次の問題へ"}</button>
+    </div>`;
+  document.getElementById("next").onclick=next;
+}
+function charLen(s){ return Array.from(s.replace(/\s/g,"")).length; }
+function renderEssay(q){
+  const a = state.answers[q.id];
+  main.innerHTML = `${head(q)}<p class="stem">${q.stem}</p>
+    <label for="essay" class="muted small">解答欄（目安は40〜45字。句読点も1字）</label>
+    <textarea id="essay" placeholder="ここに解答を書いてください" ${a?"readonly":""}></textarea>
+    <div class="count" id="count">0字</div>
+    <div id="after"></div>`;
+  const ta=document.getElementById("essay"), cnt=document.getElementById("count");
+  const drafts = lsGet(DRAFT_KEY)||{};
+  ta.value = a ? a.text : (drafts[q.id]||"");
+  const upd=()=>{ const n=charLen(ta.value); cnt.textContent=n+"字"; cnt.classList.toggle("over", n>50); };
+  upd();
+  if(!a){
+    state.shownAt = Date.now();
+    ta.oninput=()=>{ upd(); const d=lsGet(DRAFT_KEY)||{}; d[q.id]=ta.value; lsSet(DRAFT_KEY,d); };
+    document.getElementById("after").innerHTML = `<button class="btn" id="check">答え合わせをする</button>`;
+    document.getElementById("check").onclick=()=>{
+      const text=ta.value.trim();
+      if(!text){ ta.focus(); cnt.textContent="解答を書いてから答え合わせをしてください"; return; }
+      const secs=Math.max(1,Math.round((Date.now()-state.shownAt)/1000));
+      const checks=q.elements.map(e=>e.kw.some(w=>text.includes(w)));
+      state.answers[q.id]={text, checks, seconds:secs, graded:false, saved:"off"}; persist(); render();
+    };
+  } else renderEssayAfter(q,a);
+}
+function essayMax(q){ return q.elements.reduce((s,e)=>s+e.pts,0); }
+function essayScore(q,checks){ return q.elements.reduce((s,e,k)=>s+(checks[k]?e.pts:0),0); }
+function renderEssayAfter(q,a){
+  const total=essayMax(q);
+  const checksHtml = q.elements.map((e,k)=>`<label for="el-${q.id}-${k}"><input type="checkbox" id="el-${q.id}-${k}" ${a.checks[k]?"checked":""} ${a.graded?"disabled":""}><span>${esc(e.label)}</span><span class="pts">${e.pts}点</span></label>`).join("");
+  const isLast = state.i===Q.length-1;
+  document.getElementById("after").innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="card"><p class="muted small">模範解答（${charLen(q.model)}字）</p><p class="model">${esc(q.model)}</p></div>
+      <div class="card">
+        <p><b>採点</b>　自分の解答に入っている要素にチェックしてください。キーワードから自動で仮チェックしています。</p>
+        <div class="checks">${checksHtml}</div>
+        <p class="score" id="escore">${essayScore(q,a.checks)}<small> / ${total}点</small></p>
+        ${a.graded ? `<span class="savenote" id="savenote-${q.id}">${savedText(a.saved)}</span>` : `<button class="btn" id="grade">この採点で確定する</button>`}
+      </div>
+      <details open><summary>解説</summary><div class="why"><p>${esc(q.explain)}</p></div></details>
+      ${q.basis&&q.basis.length?`<details><summary>根拠（条文・判例）</summary><ul class="basis">${q.basis.map(b=>`<li>${esc(b)}</li>`).join("")}</ul></details>`:""}
+      ${q.tip?`<p class="tip"><b>メモ</b>　${esc(q.tip)}</p>`:""}
+      ${a.graded ? `<button class="btn" id="next">${isLast?"結果を見る":"次の問題へ"}</button>` : ""}
+    </div>`;
+  if(!a.graded){
+    q.elements.forEach((_,k)=>{ document.getElementById("el-"+q.id+"-"+k).onchange=ev=>{ a.checks[k]=ev.target.checked; persist(); document.getElementById("escore").firstChild.nodeValue=essayScore(q,a.checks); }; });
+    document.getElementById("grade").onclick=()=>{
+      a.graded=true; a.score=essayScore(q,a.checks); a.saved=mode==="self"?"pending":"off"; persist();
+      const d=lsGet(DRAFT_KEY)||{}; delete d[q.id]; lsSet(DRAFT_KEY,d);
+      render();
+      if(a.saved==="pending"){
+        save({question:qLabel(q,state.i), answer:a.text, result:"記述 "+a.score+"/"+total+"点 ["+q.elements.map((e,k)=>(a.checks[k]?"○":"×")).join("")+"] "+a.seconds+"秒"}).then(ok=>{
+          a.saved=ok?"ok":"fail"; persist();
+          const el=document.getElementById("savenote-"+q.id); if(el) el.textContent=savedText(a.saved);
+        });
+      }
+    };
+  } else document.getElementById("next").onclick=next;
+}
+
+/* ---------- results ---------- */
+function fmtSec(s){ return s>=60 ? Math.floor(s/60)+"分"+String(s%60).padStart(2,"0")+"秒" : s+"秒"; }
+function level(r){ return r<0.6 ? ["weak","要強化"] : r<0.8 ? ["mid","あと一歩"] : ["good","得点源"]; }
+function areaStats(){
+  const m=new Map();
+  Q.forEach(q=>{
+    const a=state.answers[q.id]; if(!a) return;
+    if(!m.has(q.area)) m.set(q.area,{area:q.area,got:0,max:0});
+    const s=m.get(q.area);
+    if(q.kind==="essay"){ if(a.graded){ s.got+=a.score/essayMax(q); s.max+=1; } }
+    else { s.max+=1; if(a.correct) s.got+=1; }
+  });
+  return [...m.values()].filter(s=>s.max>0).map(s=>({...s, rate:s.got/s.max})).sort((x,y)=>x.rate-y.rate);
+}
+function totals(){
+  const mcOk=MC.filter(q=>state.answers[q.id]&&state.answers[q.id].correct).length;
+  const es=Q.filter(q=>q.kind==="essay");
+  const eGot=es.reduce((s,q)=>s+((state.answers[q.id]&&state.answers[q.id].graded)?state.answers[q.id].score:0),0);
+  const eMax=es.reduce((s,q)=>s+essayMax(q),0);
+  return {mcOk, eGot, eMax, es};
+}
+function summaryText(){
+  const d=new Date(); const p=n=>String(n).padStart(2,"0");
+  const stamp=`${d.getFullYear()}/${p(d.getMonth()+1)}/${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+  const t=totals();
+  const lines=[`【${SET.title} 結果】${stamp} 受験コード ${examCode()}`, `択一 ${t.mcOk}/${MC.length}問（${Math.round(t.mcOk/MC.length*100)}%）`+(t.es.length?` 記述 ${t.eGot}/${t.eMax}点`:"")];
+  lines.push("■分野別");
+  areaStats().forEach(s=>lines.push(`${s.area} ${Math.round(s.rate*100)}%（${level(s.rate)[1]}）`));
+  lines.push("■各問");
+  Q.forEach((q,k)=>{
+    const a=state.answers[q.id];
+    if(!a){ lines.push(`Q${k+1} 未解答 ${q.area}/${q.topic}`); return; }
+    if(q.kind==="essay"){ lines.push(`Q${k+1} 記述 ${a.graded?a.score+"/"+essayMax(q)+"点":"未採点"} ${q.area}/${q.topic}`); lines.push(`  解答: ${a.text}`); }
+    else lines.push(`Q${k+1} ${a.correct?"○":"×"} 肢${a.choice+1}（正解${q.answer+1}・${fmtSec(a.seconds)}） ${q.area}/${q.topic}`);
+  });
+  return lines.join("\n");
+}
+function renderResult(){
+  const t=totals();
+  const totalSec=Object.values(state.answers).reduce((s,a)=>s+(a.seconds||0),0);
+  const anyFail = Object.values(state.answers).some(a=>a.saved==="fail"||a.saved==="off");
+  const stats = areaStats();
+  lsSet(SUM_KEY, {mcOk:t.mcOk, mcN:MC.length, eGot:t.eGot, eMax:t.eMax, at:Date.now(), weak:stats.filter(s=>s.rate<0.6).map(s=>s.area)});
+  const areasHtml = stats.map(s=>{ const [cls,lab]=level(s.rate); const col = cls==="weak"?"var(--ng)":cls==="mid"?"var(--mid)":"var(--ok)";
+    return `<div class="area"><span class="nm">${esc(s.area)}<span class="lv ${cls}">${lab}</span></span><span class="val">${Math.round(s.rate*100)}%（${Math.round(s.got*10)/10}/${s.max}）</span><span class="meter"><span style="width:${Math.max(3,Math.round(s.rate*100))}%;background:${col}"></span></span></div>`; }).join("");
+  const missed = Q.filter(q=>{ const a=state.answers[q.id]; return a && (q.kind==="essay" ? (a.graded && a.score<essayMax(q)*0.6) : !a.correct); });
+  const rows=Q.map((q,k)=>{
+    const a=state.answers[q.id];
+    if(!a) return `<tr><td>${k+1}</td><td>${esc(q.area)}</td><td>—</td><td>—</td></tr>`;
+    if(q.kind==="essay") return `<tr><td>${k+1}</td><td>${esc(q.area)}</td><td>${a.graded?a.score+"/"+essayMax(q):"未採点"}</td><td>${fmtSec(a.seconds)}</td></tr>`;
+    return `<tr><td>${k+1}</td><td>${esc(q.area)}</td><td class="${a.correct?"o":"x"}">${a.correct?"○":"×"} ${a.choice+1}</td><td>${fmtSec(a.seconds)}</td></tr>`;
+  }).join("");
+  main.innerHTML = `
+    <div class="qhead"><h2>結果</h2><span class="tag">受験コード ${esc(examCode())}</span></div>
+    <div class="card">
+      <p class="muted small">5肢択一の正答率</p>
+      <p class="score">${Math.round(t.mcOk/MC.length*100)}%<small>　${t.mcOk} / ${MC.length}問</small></p>
+    </div>
+    <div class="stats">
+      <div><b>${t.es.length?t.eGot+"/"+t.eMax:"—"}</b><span>記述</span></div>
+      <div><b>${t.mcOk*PT}</b><span>択一（${MC.length*PT}点中）</span></div>
+      <div><b>${fmtSec(totalSec)}</b><span>合計時間</span></div>
+    </div>
+    <section class="card"><h2>分野別の正答率</h2><p class="note">60%未満は「要強化」、80%以上は「得点源」です。</p><div class="areas">${areasHtml}</div></section>
+    ${missed.length?`<section class="card"><h2>復習する論点</h2><ul class="misslist">${missed.map(q=>`<li>第${Q.indexOf(q)+1}問　${esc(q.area)}／${esc(q.topic)}</li>`).join("")}</ul></section>`:""}
+    <div class="tbl"><table><thead><tr><th>問</th><th>分野</th><th>結果</th><th>時間</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <div class="card">
+      <p><b>結果を送る</b></p>
+      <p class="note">${mode!=="self" ? "下のボタンで結果をコピーし、LINEなどで送ってください。" : anyFail ? "一部の回答が自動送信されていません。下のボタンで結果をコピーし、LINEなどで送ってください。" : "回答は自動送信済みです。念のため、結果をコピーして送ることもできます。"}</p>
+      <button class="btn${anyFail?"":" ghost"}" id="copy">結果をコピー</button>
+      <p class="toast" id="toast"></p>
+      <textarea id="copytext" class="copybox" readonly hidden></textarea>
+    </div>
+    <div class="row"><a class="btn" href="./">セット一覧へ</a><button class="btn ghost" id="again">最初から解き直す</button></div>`;
+  document.getElementById("copy").onclick=async()=>{
+    const tx=summaryText(), toast=document.getElementById("toast"), box=document.getElementById("copytext");
+    try{ await navigator.clipboard.writeText(tx); toast.textContent="コピーしました。LINEなどに貼り付けて送ってください。"; box.hidden=true; }
+    catch(err){ box.value=tx; box.hidden=false; box.focus(); box.select(); toast.textContent="自動でコピーできませんでした。下の文章を長押しして「すべてを選択」→「コピー」してください。"; }
+  };
+  document.getElementById("again").onclick=()=>{ state.run=newRun(); state.answers={}; state.i=0; persist(); render(); window.scrollTo(0,0); };
+}
+document.getElementById("setName").textContent = SET.title;
+setChip();
+render();
+</script>
+</body>
+</html>
