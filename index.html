@@ -58,7 +58,17 @@ p{margin:0}
 .tasks li{display:grid;grid-template-columns:1.6em 1fr auto;gap:8px;align-items:start;font-size:15px}
 .tasks li > *{min-width:0}
 .tasks .ck{width:1.3em;height:1.3em;border-radius:6px;border:1.5px solid var(--line);display:inline-flex;align-items:center;justify-content:center;font-size:13px;margin-top:3px}
+.tasks .ck{appearance:none;-webkit-appearance:none;background:transparent;padding:0;cursor:pointer;color:inherit;font:inherit;font-size:13px;font-weight:700}
+.tasks .ck:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .tasks .ck.on{background:var(--ok);border-color:var(--ok);color:#fff}
+.tasks .ck.late{background:var(--mid);border-color:var(--mid);color:#fff}
+.tasks .ck.over{border-color:var(--ng);border-width:2px}
+.tasks .when{display:block;font-size:12.5px;color:var(--muted);font-weight:400}
+.tasks .when.late{color:var(--mid)}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:1em;height:1em;border-radius:4px;display:inline-block;border:1.5px solid var(--line)}
+.legend i.on{background:var(--ok);border-color:var(--ok)} .legend i.late{background:var(--mid);border-color:var(--mid)} .legend i.over{border:2px solid var(--ng)}
 .tasks a{color:var(--accent);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .tasks .min{font-size:13px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
 .tag{font-size:12px;font-weight:700;padding:1px 8px;border-radius:999px;background:var(--accent);color:#fff}
@@ -74,7 +84,8 @@ p{margin:0}
   </header>
   <section style="display:flex;flex-direction:column;gap:10px">
     <h2>直前スケジュール（1日2〜3時間）</h2>
-    <p class="small muted">上から順に進めます。時間は解説を読む時間を含む目安です。「解き直し」は、そのセットを開いて「最初から解き直す」を選んでください。終わったものには自動で ✓ がつきます。</p>
+    <p class="small muted">上から順に進めます。時間は解説を読む時間を含む目安です。「解き直し」は、そのセットを開いて「最初から解き直す」を選んでください。終わったセットには自動で ✓ がつきます（予定日を過ぎてからでも反映されます）。□ をタップすると手動でもチェックできます。</p>
+    <p class="legend"><span><i class="on"></i>予定日までに完了</span><span><i class="late"></i>予定日より後に完了</span><span><i class="over"></i>予定日を過ぎて未完了</span></p>
     <div class="days" id="days"></div>
   </section>
   <section class="card">
@@ -113,9 +124,9 @@ let done=0, weak=new Set();
 list.innerHTML=groups.map(g=>'<section class="group"><h2>'+esc(g)+'</h2>'+SETS.filter(s=>s.group===g).map(s=>{
   const sum=lsGet("kd-sum-"+s.id); const prog=lsGet("kd-"+s.id+"-progress");
   let chip='<span class="st todo">未着手</span>';
-  if(sum){ done++; const r=sum.mcN?sum.mcOk/sum.mcN:0; const cls=r<0.6?"weak":r<0.8?"mid":"good"; chip='<span class="st '+cls+'">'+Math.round(r*100)+'%</span>'; (sum.weak||[]).forEach(a=>weak.add(a)); }
+  if(sum){ done++; const r=sum.mcN?sum.mcOk/sum.mcN:(sum.eMax?sum.eGot/sum.eMax:0); const cls=r<0.6?"weak":r<0.8?"mid":"good"; chip='<span class="st '+cls+'">'+Math.round(r*100)+'%</span>'; (sum.weak||[]).forEach(a=>weak.add(a)); }
   else if(prog && prog.answers && Object.keys(prog.answers).length){ chip='<span class="st todo">途中 '+Object.keys(prog.answers).length+'/'+(s.mc+s.es)+'</span>'; }
-  return '<a class="set" href="'+s.id+'.html"><span class="t">'+esc(s.title)+'</span>'+chip+'<span class="m">択一'+s.mc+'問'+(s.es?'・記述'+s.es+'問':'')+'／約'+s.minutes+'分</span></a>';
+  return '<a class="set" href="'+s.id+'.html"><span class="t">'+esc(s.title)+'</span>'+chip+'<span class="m">'+(s.mc?'択一'+s.mc+'問':'')+(s.es?(s.mc?'・':'')+'記述'+s.es+'問':'')+'／約'+s.minutes+'分</span></a>';
 }).join("")+'</section>').join("");
 (function(){
   const now=new Date(); const pad=n=>String(n).padStart(2,"0");
@@ -127,16 +138,48 @@ list.innerHTML=groups.map(g=>'<section class="group"><h2>'+esc(g)+'</h2>'+SETS.f
   else if(left===0) cd.textContent="試験当日です。新しい問題は解かず、記述の型と数字だけ確認しましょう。";
   const byId=Object.fromEntries(SETS.map(s=>[s.id,s]));
   const dayStart=d=>{ const [y,m,dd]=d.split("-").map(Number); return new Date(y,m-1,dd).getTime(); };
-  document.getElementById("days").innerHTML=PLAN.map(day=>{
-    const cls=day.d===today?"day today":(day.d<today?"day past":"day");
-    const items=day.tasks.map(t=>{
-      if(!t.id) return '<li><span class="ck" aria-hidden="true"></span><span>'+esc(t.note)+'</span><span class="min">'+(t.m?t.m+"分":"")+'</span></li>';
-      const sum=lsGet("kd-sum-"+t.id); const ok=!!sum && (!t.redo || (sum.at||0)>=dayStart(day.d));
-      const name=(t.redo?"解き直し：":"")+(byId[t.id]?byId[t.id].title:t.id);
-      return '<li><span class="ck'+(ok?" on":"")+'" aria-label="'+(ok?"完了":"未完了")+'">'+(ok?"✓":"")+'</span><a href="'+t.id+'.html">'+esc(name)+'</a><span class="min">'+t.m+'分</span></li>';
+  const PLAN_START=dayStart(PLAN[0].d);
+  const MKEY="kd-plan-check";
+  // completions after the plan started, oldest first (history per run; older versions only left kd-sum)
+  const comps={};
+  const compsOf=id=>{ if(comps[id]) return comps[id];
+    let h=(lsGet("kd-done-"+id)||[]).map(x=>x.at);
+    if(!h.length){ const sum=lsGet("kd-sum-"+id); if(sum&&sum.at) h=[sum.at]; }
+    return comps[id]=h.filter(t=>t>=PLAN_START).sort((a,b)=>a-b); };
+  const used={};
+  const md=t=>{ const d=new Date(t); return (d.getMonth()+1)+"/"+d.getDate(); };
+  function render(){
+    const manual=lsGet(MKEY)||{};
+    for(const k in used) delete used[k];
+    document.getElementById("days").innerHTML=PLAN.map(day=>{
+      const cls=day.d===today?"day today":(day.d<today?"day past":"day");
+      const dueEnd=dayStart(day.d)+86400000;
+      const items=day.tasks.map((t,ix)=>{
+        const key=day.d+"/"+ix;
+        let at=null, auto=false;
+        if(t.id){ const n=used[t.id]||0; used[t.id]=n+1; const c=compsOf(t.id)[n]; if(c){ at=c; auto=true; } }
+        if(!at && manual[key]) at=manual[key];
+        const state=at ? (at<dueEnd?"on":"late") : (day.d<today?"over":"");
+        const label=at ? (state==="late"?"予定日より後に完了":"完了")+(auto?"（自動）":"（手動）") : "未完了";
+        const box='<button type="button" class="ck'+(state?" "+state:"")+'" data-key="'+key+'" data-auto="'+(auto?1:0)+'" aria-pressed="'+(at?"true":"false")+'" aria-label="'+label+'" title="'+label+'">'+(at?"✓":"")+'</button>';
+        const when=at ? '<span class="when'+(state==="late"?" late":"")+'">'+md(at)+(state==="late"?" 完了（予定より後）":" 完了")+'</span>' : "";
+        if(!t.id) return '<li>'+box+'<span>'+esc(t.note)+when+'</span><span class="min">'+(t.m?t.m+"分":"")+'</span></li>';
+        const name=(t.redo?"解き直し：":"")+(byId[t.id]?byId[t.id].title:t.id);
+        return '<li>'+box+'<span><a href="'+t.id+'.html">'+esc(name)+'</a>'+when+'</span><span class="min">'+t.m+'分</span></li>';
+      }).join("");
+      return '<article class="'+cls+'"><header><b>'+esc(day.label)+'</b>'+(day.d===today?'<span class="tag">今日</span>':'')+'<span class="muted">'+esc(day.hours)+'</span></header><p class="focus">'+esc(day.focus)+'</p><ul class="tasks">'+items+'</ul></article>';
     }).join("");
-    return '<article class="'+cls+'"><header><b>'+esc(day.label)+'</b>'+(day.d===today?'<span class="tag">今日</span>':'')+'<span class="muted">'+esc(day.hours)+'</span></header><p class="focus">'+esc(day.focus)+'</p><ul class="tasks">'+items+'</ul></article>';
-  }).join("");
+  }
+  render();
+  document.getElementById("days").addEventListener("click",e=>{
+    const b=e.target.closest("button.ck"); if(!b) return;
+    if(b.dataset.auto==="1") return; // finished in the drill itself; nothing to toggle
+    const m=lsGet(MKEY)||{}; const k=b.dataset.key;
+    if(m[k]) delete m[k]; else m[k]=Date.now();
+    try{ localStorage.setItem(MKEY, JSON.stringify(m)); }catch(err){}
+    render();
+    const nb=document.querySelector('button.ck[data-key="'+k+'"]'); if(nb) nb.focus();
+  });
 })();
 if(done){ document.getElementById("summary").hidden=false; document.getElementById("sumText").textContent=done+" / "+SETS.length+"セット完了";
   if(weak.size){ document.getElementById("weakWrap").hidden=false; document.getElementById("weakList").innerHTML=[...weak].map(a=>"<span>"+esc(a)+"</span>").join(""); } }

@@ -6,7 +6,7 @@ const MC = Q.filter(q=>q.kind==="mc");
 const PT = 4;
 
 /* ---------- storage ---------- */
-const LS_KEY = "kd-"+SET.id+"-progress", DRAFT_KEY = "kd-"+SET.id+"-draft", SUM_KEY = "kd-sum-"+SET.id;
+const LS_KEY = "kd-"+SET.id+"-progress", DRAFT_KEY = "kd-"+SET.id+"-draft", SUM_KEY = "kd-sum-"+SET.id, DONE_KEY = "kd-done-"+SET.id;
 const state = { i:-1, run:null, answers:{}, shownAt:0 };
 function lsGet(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } }
 function lsSet(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
@@ -212,6 +212,7 @@ function renderEssayAfter(q,a){
 }
 
 /* ---------- results ---------- */
+function pct(a,b){ return b ? Math.round(a/b*100) : 0; }
 function fmtSec(s){ return s>=60 ? Math.floor(s/60)+"分"+String(s%60).padStart(2,"0")+"秒" : s+"秒"; }
 function level(r){ return r<0.6 ? ["weak","要強化"] : r<0.8 ? ["mid","あと一歩"] : ["good","得点源"]; }
 function areaStats(){
@@ -236,7 +237,7 @@ function summaryText(){
   const d=new Date(); const p=n=>String(n).padStart(2,"0");
   const stamp=`${d.getFullYear()}/${p(d.getMonth()+1)}/${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
   const t=totals();
-  const lines=[`【${SET.title} 結果】${stamp} 受験コード ${examCode()}`, `択一 ${t.mcOk}/${MC.length}問（${Math.round(t.mcOk/MC.length*100)}%）`+(t.es.length?` 記述 ${t.eGot}/${t.eMax}点`:"")];
+  const lines=[`【${SET.title} 結果】${stamp} 受験コード ${examCode()}`, (MC.length?`択一 ${t.mcOk}/${MC.length}問（${pct(t.mcOk,MC.length)}%）`:"")+(t.es.length?`${MC.length?" ":""}記述 ${t.eGot}/${t.eMax}点（${pct(t.eGot,t.eMax)}%）`:"")];
   lines.push("■分野別");
   areaStats().forEach(s=>lines.push(`${s.area} ${Math.round(s.rate*100)}%（${level(s.rate)[1]}）`));
   lines.push("■各問");
@@ -253,7 +254,18 @@ function renderResult(){
   const totalSec=Object.values(state.answers).reduce((s,a)=>s+(a.seconds||0),0);
   const anyFail = Object.values(state.answers).some(a=>a.saved==="fail"||a.saved==="off");
   const stats = areaStats();
-  lsSet(SUM_KEY, {mcOk:t.mcOk, mcN:MC.length, eGot:t.eGot, eMax:t.eMax, at:Date.now(), weak:stats.filter(s=>s.rate<0.6).map(s=>s.area)});
+  // completion history (one entry per run) so the schedule can tell when each set was finished
+  const prevSum = lsGet(SUM_KEY);
+  const hist = lsGet(DONE_KEY) || [];
+  if(prevSum && prevSum.at && !prevSum.run && !hist.length){
+    // saved by the older version (no run number): same run if the scores match, otherwise an earlier finish
+    const same = prevSum.mcN===MC.length && prevSum.mcOk===t.mcOk && prevSum.eGot===t.eGot;
+    hist.push({run: same ? state.run : "legacy", at: prevSum.at});
+  }
+  if(!hist.some(h=>h.run===state.run)) hist.push({run:state.run, at:Date.now()});
+  lsSet(DONE_KEY, hist);
+  const doneAt = hist.find(h=>h.run===state.run).at;
+  lsSet(SUM_KEY, {mcOk:t.mcOk, mcN:MC.length, eGot:t.eGot, eMax:t.eMax, at:doneAt, run:state.run, weak:stats.filter(s=>s.rate<0.6).map(s=>s.area)});
   const areasHtml = stats.map(s=>{ const [cls,lab]=level(s.rate); const col = cls==="weak"?"var(--ng)":cls==="mid"?"var(--mid)":"var(--ok)";
     return `<div class="area"><span class="nm">${esc(s.area)}<span class="lv ${cls}">${lab}</span></span><span class="val">${Math.round(s.rate*100)}%（${Math.round(s.got*10)/10}/${s.max}）</span><span class="meter"><span style="width:${Math.max(3,Math.round(s.rate*100))}%;background:${col}"></span></span></div>`; }).join("");
   const missed = Q.filter(q=>{ const a=state.answers[q.id]; return a && (q.kind==="essay" ? (a.graded && a.score<essayMax(q)*0.6) : !a.correct); });
@@ -266,12 +278,13 @@ function renderResult(){
   main.innerHTML = `
     <div class="qhead"><h2>結果</h2><span class="tag">受験コード ${esc(examCode())}</span></div>
     <div class="card">
-      <p class="muted small">5肢択一の正答率</p>
-      <p class="score">${Math.round(t.mcOk/MC.length*100)}%<small>　${t.mcOk} / ${MC.length}問</small></p>
+      ${MC.length ? `<p class="muted small">5肢択一の正答率</p>
+      <p class="score">${pct(t.mcOk,MC.length)}%<small>　${t.mcOk} / ${MC.length}問</small></p>` : `<p class="muted small">記述の得点率</p>
+      <p class="score">${pct(t.eGot,t.eMax)}%<small>　${t.eGot} / ${t.eMax}点</small></p>`}
     </div>
     <div class="stats">
       <div><b>${t.es.length?t.eGot+"/"+t.eMax:"—"}</b><span>記述</span></div>
-      <div><b>${t.mcOk*PT}</b><span>択一（${MC.length*PT}点中）</span></div>
+      <div><b>${MC.length?t.mcOk*PT:"—"}</b><span>${MC.length?`択一（${MC.length*PT}点中）`:"択一"}</span></div>
       <div><b>${fmtSec(totalSec)}</b><span>合計時間</span></div>
     </div>
     <section class="card"><h2>分野別の正答率</h2><p class="note">60%未満は「要強化」、80%以上は「得点源」です。</p><div class="areas">${areasHtml}</div></section>
