@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>直前チェックシート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Old+Mincho:wght@700&display=swap">
+<style>
+:root{
+  --paper:#F4F5F8; --surface:#FFFFFF; --ink:#1A2033; --muted:#5A6174; --line:#D8DBE4;
+  --accent:#27408B; --accent-soft:#E7EBF7; --ok:#1E7A4C; --ok-soft:#E2F2E9; --ng:#B42318; --ng-soft:#FBE8E6; --mid:#9A6700; --mid-soft:#FBF1DC;
+  --mark:#FFF1A8;
+  --f-body:"BIZ UDPGothic","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  --f-head:"Zen Old Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#11141C; --surface:#1A1E29; --ink:#E7E9F0; --muted:#A1A7B7; --line:#2D3341;
+  --accent:#93A8F0; --accent-soft:#222B45; --ok:#5DC48E; --ok-soft:#173224; --ng:#F08B80; --ng-soft:#3A1F1C; --mid:#E3B341; --mid-soft:#3A2F14; --mark:#4A3F12; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#11141C; --surface:#1A1E29; --ink:#E7E9F0; --muted:#A1A7B7; --line:#2D3341;
+  --accent:#93A8F0; --accent-soft:#222B45; --ok:#5DC48E; --ok-soft:#173224; --ng:#F08B80; --ng-soft:#3A1F1C; --mid:#E3B341; --mid-soft:#3A2F14; --mark:#4A3F12; color-scheme:dark}
+html{-webkit-text-size-adjust:100%;color-scheme:light;scroll-behavior:smooth;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 56px}
+.wrap{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+h1,h2,h3{font-family:var(--f-head);font-weight:700;margin:0;line-height:1.4;text-wrap:balance}
+h1{font-size:25px} h2{font-size:19px} h3{font-size:16px}
+p{margin:0}
+a{color:var(--accent)}
+.muted{color:var(--muted)} .small{font-size:14px}
+.back{font-size:14px;font-weight:700;text-decoration:none}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px}
+nav.toc a{font-size:14px;font-weight:700;text-decoration:none;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:4px 12px}
+section{display:flex;flex-direction:column;gap:12px;scroll-margin-top:12px}
+section > header{display:flex;flex-direction:column;gap:4px;border-left:4px solid var(--accent);padding-left:10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.card h3 .law{font-family:var(--f-body);font-size:13px;font-weight:400;color:var(--muted);margin-left:6px}
+.form{background:var(--accent-soft);border-radius:8px;padding:10px 12px;font-size:15.5px}
+.form b, mark{background:var(--mark);color:inherit;font-weight:700;padding:0 2px;border-radius:3px}
+.pitfall{font-size:14px;color:var(--ng);background:var(--ng-soft);border-radius:8px;padding:6px 10px}
+.pitfall::before{content:"取り違え注意　";font-weight:700}
+.pair{display:grid;grid-template-columns:1fr;gap:10px}
+.pair .card{border-width:1.5px}
+.tag{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:1px 9px;margin-right:6px;vertical-align:2px}
+.tag.ok{background:var(--ok-soft);color:var(--ok)} .tag.ng{background:var(--ng-soft);color:var(--ng)}
+ul,ol{margin:0;padding-left:1.25em;display:flex;flex-direction:column;gap:4px}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th,td{border-bottom:1px solid var(--line);padding:7px 6px;text-align:left;vertical-align:top}
+th{font-size:13px;color:var(--muted);font-weight:700}
+td.num{white-space:nowrap;font-weight:700;font-variant-numeric:tabular-nums}
+td.val{font-weight:700;font-variant-numeric:tabular-nums;width:52%}
+td{overflow-wrap:anywhere}
+.foot{font-size:13px;color:var(--muted)}
+@media (min-width:560px){ .pair{grid-template-columns:1fr 1fr} }
+@media print{ body{background:#fff} .card{break-inside:avoid} nav.toc,.back{display:none} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header style="display:flex;flex-direction:column;gap:8px">
+    <a class="back" href="./">← セット一覧へ</a>
+    <p class="muted small">令和8年度 行政書士試験（11月8日 13:00〜16:00）</p>
+    <h1>直前チェックシート</h1>
+    <p class="small">これまでの解答で<b>取り違えが多かったところ</b>だけを集めました。上から順に読み、<mark>黄色</mark>の言葉をそのまま書けるようにしてください。</p>
+    <nav class="toc" aria-label="目次">
+      <a href="#minpo">① 民法記述</a><a href="#gyosei">② 行政法記述</a><a href="#chiji">③ 国の関与・住民訴訟</a><a href="#suji">④ 数字</a><a href="#kiso">⑤ 基礎知識</a><a href="#honban">⑥ 本番</a>
+    </nav>
+  </header>
+
+  <section id="minpo">
+    <header><h2>① 民法記述の型</h2><p class="small muted">民法の記述は2問・40点。似た条文を<b>並べて</b>覚えます。</p></header>
+
+    <div class="pair">
+      <div class="card">
+        <h3>詐欺による取消しと第三者<span class="law">96条3項</span></h3>
+        <p class="form">詐欺による取消しは、<b>善意でかつ過失がない第三者</b>に<b>対抗できない</b>。</p>
+      </div>
+      <div class="card">
+        <h3>第三者が詐欺をした場合<span class="law">96条2項</span></h3>
+        <p class="form">相手方がその事実を<b>知り、又は知ることができたとき</b>に限り、取り消すことができる。</p>
+      </div>
+    </div>
+    <p class="pitfall">「詐欺と第三者」で2項の言い回し（知り又は知ることができた）を書いて0点でした。第三者が「取消し後の権利者」なら3項（対抗の問題）です。</p>
+
+    <div class="card">
+      <h3>錯誤と表意者の重過失<span class="law">95条3項</span></h3>
+      <p class="form">表意者に重大な過失があるときは、原則として取り消せない。<br>例外：相手方が<b>知り、又は重大な過失によって知らなかった</b>とき／相手方が<b>同一の錯誤</b>に陥っていたとき。</p>
+      <p class="small muted">錯誤による取消しも、善意でかつ過失がない第三者に対抗できない（95条4項）。</p>
+    </div>
+
+    <div class="card">
+      <h3>賃借人と不法占拠者<span class="law">605条の4</span></h3>
+      <p class="form"><b>対抗要件を備えた</b>不動産賃借人は、<b>賃借権に基づき</b>、占有する第三者に<b>返還</b>を請求できる（妨害する者には妨害の停止）。</p>
+      <p class="pitfall">2回とも「所有権に基づき」と書いています。賃借人は所有者ではありません。</p>
+    </div>
+
+    <div class="card">
+      <h3>契約不適合責任<span class="law">562〜564条</span></h3>
+      <p class="form">買主は、<b>履行の追完</b>の請求、<b>代金の減額</b>の請求、<b>損害賠償</b>の請求、契約の<b>解除</b>をすることができる。</p>
+      <p class="small muted">覚え方：「ついか・げんがく・ばいしょう・かいじょ」の4つ。</p>
+    </div>
+
+    <div class="card">
+      <h3>遺留分侵害額請求<span class="law">1046条・1048条</span></h3>
+      <p class="form">遺留分侵害額に相当する<b>金銭の支払</b>を請求できる。相続の開始と侵害する贈与・遺贈を<b>知った時から1年</b>（相続開始から10年）で時効消滅。</p>
+      <p class="pitfall">「相続の開始から1年」は誤り。起算点は「知った時」です。</p>
+    </div>
+
+    <div class="card">
+      <h3>債権者代位権<span class="law">423条の2・423条の3</span></h3>
+      <p class="form">債務者の権利を<b>代位行使</b>し、<b>自己の債権額の限度</b>で、相手方に<b>自己に</b>支払うよう請求できる。</p>
+    </div>
+
+    <div class="card">
+      <h3>無権代理の相手方の催告権<span class="law">114条</span></h3>
+      <p class="form">相手方は本人に対し、<b>相当の期間を定めて</b>、追認するかどうかを確答すべき旨の<b>催告</b>ができる。確答がなければ<b>追認を拒絶したものとみなす</b>。</p>
+      <p class="pitfall">「勧告」ではなく「催告」です。</p>
+    </div>
+  </section>
+
+  <section id="gyosei">
+    <header><h2>② 行政法記述</h2><p class="small muted">行政法の記述は1問・20点。要件が似ている2つを対比します。</p></header>
+    <div class="pair">
+      <div class="card">
+        <h3>非申請型（直接型）義務付け訴訟<span class="law">行訴法37条の2</span></h3>
+        <p class="form">一定の処分がされないことにより<b>重大な損害</b>を生ずるおそれがあり、かつ、その損害を避けるため<b>他に適当な方法がない</b>とき（原告は<b>法律上の利益</b>を有する者）。</p>
+      </div>
+      <div class="card">
+        <h3>行政代執行の要件<span class="law">行政代執行法2条</span></h3>
+        <p class="form"><b>代替的作為義務</b>の不履行があり、<b>他の手段</b>によってその履行を確保することが<b>困難</b>で、かつ、その不履行を<b>放置</b>することが<b>著しく公益に反する</b>とき。</p>
+      </div>
+    </div>
+    <p class="pitfall">代執行に「重大な損害」と書いていました（義務付け訴訟の要件）。非申請型を「形式的当事者訴訟」と書いたのも誤りです。</p>
+    <div class="card">
+      <h3><span class="tag ok">仕上がり済み</span>申請型義務付け・事情判決</h3>
+      <ul class="small">
+        <li><b>申請型義務付け</b>（2回連続満点）：A市を被告として、拒否処分の取消訴訟と義務付け訴訟を<b>併合</b>して提起する。</li>
+        <li><b>事情判決</b>（行訴法31条1項）：請求を<b>棄却</b>でき、判決の<b>主文</b>で処分が<b>違法であることを宣言</b>しなければならない。</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="chiji">
+    <header><h2>③ 国の関与・住民訴訟</h2><p class="small muted">「国の関与」は5回連続で×でした。この4点だけで解けます。</p></header>
+    <div class="card">
+      <h3>国の関与<span class="law">地方自治法245条以下</span></h3>
+      <ol>
+        <li>法律又はこれに基づく政令によらなければ関与を受けない（<b>関与の法定主義</b>・245条の2）。</li>
+        <li>自治事務には<b>是正の要求</b>（245条の5）、法定受託事務には<b>是正の指示</b>（245条の7）。</li>
+        <li><b>代執行</b>ができるのは<b>法定受託事務だけ</b>（245条の8）。</li>
+        <li>不服は、まず<b>国地方係争処理委員会</b>（<b>総務省</b>に置かれる）へ審査の申出。その勧告等に不服なら<b>高等裁判所</b>へ（251条の5）。</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h3>住民監査請求・住民訴訟<span class="law">242条・242条の2</span></h3>
+      <ul>
+        <li>住民訴訟の前に<b>住民監査請求</b>を経る（監査請求前置）。</li>
+        <li>住民監査請求は「違法又は<b>不当</b>」を対象にできるが、住民訴訟で争えるのは<b>違法</b>だけ。</li>
+        <li>監査結果の通知から<b>30日以内</b>に提起。<b>地方裁判所</b>の専属管轄。</li>
+        <li>4号請求は、執行機関等に「職員等へ損害賠償を<b>請求することを求める</b>」もの（住民が直接請求するのではない）。</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>直接請求の請求先</h3>
+      <table>
+        <thead><tr><th>請求</th><th>署名</th><th>請求先</th></tr></thead>
+        <tbody>
+          <tr><td>条例の制定改廃</td><td class="num">1/50</td><td>長</td></tr>
+          <tr><td>事務の監査</td><td class="num">1/50</td><td>監査委員</td></tr>
+          <tr><td>議会の解散・議員と長の解職</td><td class="num">1/3</td><td>選挙管理委員会</td></tr>
+          <tr><td>副知事・副市町村長などの解職</td><td class="num">1/3</td><td>長</td></tr>
+        </tbody>
+      </table>
+      <p class="small muted">1/3 は原則（有権者数が多い団体には緩和あり）。</p>
+    </div>
+  </section>
+
+  <section id="suji">
+    <header><h2>④ 数字（期間）</h2><p class="small muted">前日に紙へ書き出し、当日の朝に見直します。</p></header>
+    <div class="card">
+      <table>
+        <thead><tr><th>項目</th><th>期間</th></tr></thead>
+        <tbody>
+          <tr><td>審査請求（行審法18条）</td><td class="val">知った日の翌日から3か月／処分の日の翌日から1年</td></tr>
+          <tr><td>再調査の請求の決定後の審査請求</td><td class="val">決定を知った日の翌日から1か月</td></tr>
+          <tr><td>取消訴訟の出訴期間（行訴法14条）</td><td class="val">知った日から6か月／処分の日から1年</td></tr>
+          <tr><td>住民監査請求</td><td class="val">行為の日から1年</td></tr>
+          <tr><td>住民訴訟</td><td class="val">監査結果の通知から30日</td></tr>
+          <tr><td>長の不信任議決（178条）</td><td class="val">2/3以上出席・3/4以上同意 → 10日以内に解散可</td></tr>
+          <tr><td>情報公開の開示決定</td><td class="val">原則30日（30日延長可）</td></tr>
+          <tr><td>消滅時効（民法166条）</td><td class="val">知った時から5年／行使できる時から10年</td></tr>
+          <tr><td>不法行為の損害賠償請求権</td><td class="val">損害と加害者を知った時から3年（生命・身体は5年）／行為時から20年</td></tr>
+          <tr><td>取消権（民法126条）</td><td class="val">追認できる時から5年／行為時から20年</td></tr>
+          <tr><td>催告による時効の完成猶予</td><td class="val">6か月（再度の催告は効力なし）</td></tr>
+          <tr><td>遺留分侵害額請求権</td><td class="val">知った時から1年／相続開始から10年</td></tr>
+          <tr><td>株主総会の招集通知（公開会社）</td><td class="val">2週間前まで</td></tr>
+          <tr><td>株主総会決議の取消しの訴え</td><td class="val">決議の日から3か月</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="kiso">
+    <header><h2>⑤ 基礎知識（足切り対策）</h2><p class="small muted">14問中6問（24点）以上で足切りを回避できます。</p></header>
+    <div class="card">
+      <h3>文章理解（3問）を確実に取る</h3>
+      <ul class="small">
+        <li><b>要旨把握</b>：筆者の主張は、最後の段落と「しかし」「つまり」の後に出やすい。本文にない一般論の選択肢は外す。</li>
+        <li><b>並べ替え</b>：指示語（これ・その）と接続語から、つながる2文のペアを先に作る。</li>
+        <li><b>空欄補充</b>：空欄の前後の対比・言い換えを手がかりにする。</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>情報公開法（2回連続×）</h3>
+      <ul class="small">
+        <li>開示請求は<b>何人も</b>できる（外国人・法人も可）。理由は問われない。</li>
+        <li>開示決定等は請求から<b>30日以内</b>（30日延長可）。</li>
+        <li>不開示情報を除いて開示できるときは<b>部分開示</b>しなければならない。</li>
+        <li>文書があるかないか答えるだけで不開示情報を開示することになるときは、<b>存否を明らかにしないで拒否</b>できる。</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="honban">
+    <header><h2>⑥ 本番の進め方</h2></header>
+    <div class="card">
+      <ul>
+        <li>択一は<b>1問2分以内</b>。迷ったら印をつけて先へ進み、最後に戻る。</li>
+        <li>記述3問で<b>約25分</b>を確保する。<b>白紙にしない</b>（キーワード1つでも部分点）。</li>
+        <li><b>商法</b>（5問）は時間をかけない。迷ったら即決して次へ。</li>
+        <li><b>多肢選択式</b>：語群から当てはまりそうな語を先に絞り、空欄の前後の文脈で決める。</li>
+        <li>最後の<b>10分</b>はマークのずれと記入漏れの確認に使う。</li>
+      </ul>
+    </div>
+    <p class="foot">内容は、これまでの解答で間違えた所に絞った要点です。細部は教材の条文・判例で確認してください。</p>
+  </section>
+</div>
+</body>
+</html>
